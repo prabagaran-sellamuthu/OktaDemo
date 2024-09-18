@@ -1,0 +1,19 @@
+server:
+  port: 8080
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: 0oajl4my3rz94Gh0n5d7
+            client-secret: fgesPbEuytnh0-Dp5jQBvo3wa667jbIX2oL1mHMuCe8YHMs-mzt4kMk47l8A7ujs
+            scope: openid, profile, email
+        provider:
+          okta:
+            issuer-uri: https://dev-07913094.okta.com/oauth2/default
+            # authorization-uri: https://your-subdomain.oktapreview.com/oauth2/v1/authorize
+            # token-uri: https://your-subdomain.oktapreview.com/oauth2/v1/token
+            # user-info-uri: https://your-subdomain.oktapreview.com/oauth2/v1/userinfo
+            # user-name-attribute: sub
+            # jwk-set-uri: https://your-subdomain.oktapreview.com/oauth2/v1/keys
