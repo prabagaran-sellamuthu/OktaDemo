@@ -50,20 +50,6 @@ public class UserController {
             "Client Name: " + authorizedClient.getClientRegistration().getClientName() + "<br/>" +  
             this.prettyPrintAttributes(oauth2User.getAttributes());  
     }  
-
-    @PostMapping("/logout")
-    public void handleLogout(HttpServletRequest request) {
-        // Invalidate the session
-        System.out.println("Invalidating session");
-        request.getSession().invalidate();
-    }
-
-    @PostMapping("/oidc/logout")
-    public void handleOidcLogout(HttpServletRequest request) {
-        // Invalidate the session
-        System.out.println("OIDC back-channel logout received. Invalidating session.");
-        request.getSession().invalidate();
-    }
   
     private String prettyPrintAttributes(Map<String, Object> attributes) {  
         String acc = "User Attributes: <br/><div style='padding-left:20px'>";  
