@@ -27,13 +27,13 @@ public class UserController {
         return "Authorities: " + authentication.getAuthorities();
     }
     
-    @PreAuthorize("hasAuthority('PAD')")
+    @PreAuthorize("hasAuthority('GROUP1')")
     @GetMapping("/user")
     public String getUser() {
         return "Hello World";
     }
 
-    @PreAuthorize("hasAuthority('CAD')")
+    @PreAuthorize("hasAuthority('GROUP2')")
     @GetMapping("/usertest")
     public String getUserTest() {
         return "Hello World";
