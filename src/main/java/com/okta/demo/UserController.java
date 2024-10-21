@@ -8,9 +8,13 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.Map;
 
 @RestController
@@ -29,7 +33,7 @@ public class UserController {
         return "Hello World";
     }
 
-    @PreAuthorize("hasAuthority('PADA')")
+    @PreAuthorize("hasAuthority('CAD')")
     @GetMapping("/usertest")
     public String getUserTest() {
         return "Hello World";
@@ -46,6 +50,20 @@ public class UserController {
             "Client Name: " + authorizedClient.getClientRegistration().getClientName() + "<br/>" +  
             this.prettyPrintAttributes(oauth2User.getAttributes());  
     }  
+
+    @PostMapping("/logout")
+    public void handleLogout(HttpServletRequest request) {
+        // Invalidate the session
+        System.out.println("Invalidating session");
+        request.getSession().invalidate();
+    }
+
+    @PostMapping("/oidc/logout")
+    public void handleOidcLogout(HttpServletRequest request) {
+        // Invalidate the session
+        System.out.println("OIDC back-channel logout received. Invalidating session.");
+        request.getSession().invalidate();
+    }
   
     private String prettyPrintAttributes(Map<String, Object> attributes) {  
         String acc = "User Attributes: <br/><div style='padding-left:20px'>";  

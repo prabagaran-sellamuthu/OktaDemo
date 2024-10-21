@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +31,7 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
+                    .requestMatchers("/logout", "/oidc/logout").permitAll() 
                     .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 ->
@@ -38,13 +40,19 @@ public class SecurityConfig {
                         userInfo
                             .oidcUserService(oidcUserService()) 
                     )
-            );
+            ).oidcLogout((logout) -> logout
+            .backChannel(Customizer.withDefaults())
+        );
     
         return http.build();
     }
-
+  
     @Bean
     public OidcUserService oidcUserService() {
         return new OidcUserService();
+    }
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 }
